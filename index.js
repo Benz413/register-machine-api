@@ -31,7 +31,8 @@ app.get('/api/coustomer/:euiKey', async (req, res) => {
         // console.log(result)
     } 
     catch (error) {
-        return res.status(404).json({ message: "Can't connect database..." });
+        console.log(error)
+        return res.status(404).json({ message: "Can't connect database..." })
     }
     finally {
         await client.close()
