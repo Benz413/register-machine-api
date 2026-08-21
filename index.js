@@ -13,7 +13,7 @@ app.use(express.json());
 const { MongoClient,ObjectId } = require("mongodb");       // mongoDB!
 // const urlMongo = "mongodb://production:production@localhost:27017";
 // const urlMongo = "mongodb+srv://patoobentech_db_user:2CDeCAMSCwwAoQC3@cluster0.gmy33hk.mongodb.net"
-const urlMongo = "mongodb+srv://patoobentech_db_user:2CDeCAMSCwwAoQC3@cluster.gmy33hk.mongodb.net/dbname?retryWrites=true&w=majority&tlsAllowInvalidCertificates=true"
+const urlMongo = "mongodb+srv://patoobentech_db_user:2CDeCAMSCwwAoQC3@cluster0.gmy33hk.mongodb.net/dbname?retryWrites=true&w=majority&tlsAllowInvalidCertificates=true"
 
 app.get('/api/coustomer/:euiKey', async (req, res) => {
     // const userId = parseInt(req.params.id);
