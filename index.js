@@ -13,20 +13,29 @@ app.use(express.json());
 const { MongoClient,ObjectId } = require("mongodb");       // mongoDB!
 // const urlMongo = "mongodb://production:production@localhost:27017";
 // const urlMongo = "mongodb+srv://patoobentech_db_user:2CDeCAMSCwwAoQC3@cluster0.gmy33hk.mongodb.net"
-const urlMongo = "mongodb+srv://patoobentech_db_user:2CDeCAMSCwwAoQC3@cluster.xxxx.mongodb.net/dbname?retryWrites=true&w=majority&tlsAllowInvalidCertificates=true"
+const urlMongo = "mongodb+srv://patoobentech_db_user:2CDeCAMSCwwAoQC3@cluster.gmy33hk.mongodb.net/dbname?retryWrites=true&w=majority&tlsAllowInvalidCertificates=true"
 
 app.get('/api/coustomer/:euiKey', async (req, res) => {
     // const userId = parseInt(req.params.id);
     const euiKey = req.params.euiKey
     // const userKey = req.params.key
     console.log(`GET coustomer, euiKey:${euiKey}`)
-
+    let result = null
     const client = new MongoClient(urlMongo);
-    await client.connect();
-    const query = {  CUSTOMER_KEY: euiKey , "CURRENTY_FLAG": true }
-    const result = await client.db('OMRON_SERVER_REGISTER').collection('CUSTOMER').findOne(query)
-    await client.close();      // mongoDB!  
-    // console.log(result)
+
+    try {
+        // await client.connect();
+        const query = {  CUSTOMER_KEY: euiKey , "CURRENTY_FLAG": true }
+        result = await client.db('OMRON_SERVER_REGISTER').collection('CUSTOMER').findOne(query)
+        // await client.close();      // mongoDB!  
+        // console.log(result)
+    } 
+    catch (error) {
+        return res.status(404).json({ message: "Can't connect database..." });
+    }
+    finally {
+        await client.close()
+    } 
 
     if (result == null) {
         return res.status(404).json({ message: "User not found" });
